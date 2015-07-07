@@ -1,0 +1,36 @@
+{
+  "name": "walkcyclejs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.3.7",
+    "copyfiles": "^0.2.1",
+    "babel": "^5.5.8",
+    "node-sass": "^3.2.0",
+    "postcss-cli": "^1.3.1",
+    "autoprefixer": "^5.2.0",
+    "browserify": "^10.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:KarstenBuckstegge/walkcyclejs.git"
+  },
+  "author": {
+    "name": "Karsten Buckstegge",
+    "email": "k.buckstegge@gmail.com"
+  },
+  "scripts": {
+    "start": "npm run watch",
+    "watch": "nodemon -q -w src/ --ext '.' --exec 'npm run build'",
+    "build": "npm run scripts && npm run styles && npm run html",
+    "prehtml": "rm -rf lib/*.html",
+    "html": "copyfiles -f src/markup/*.html lib",
+    "scripts": "babel src/scripts --out-dir lib/js/",
+    "styles": "node-sass --source-map lib/css/ -o lib/css/ src/styles/index.scss",
+    "poststyles": "postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -o lib/css/index.css lib/css/index.css",
+    "clean": "rm -rf lib/css && rm -rf lib/js && rm -rf dist",
+    "prepare": "mkdir -p dist"
+  }
+}
