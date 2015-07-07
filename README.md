@@ -1,5 +1,6 @@
 # walkcyclejs
-A web-based, customizable walkcycle animation.
+A web-based, customizable walkcycle animation. <br />
+Taking the [css3walkcycle](https://github.com/KarstenBuckstegge/css3walkcycle) to new heights.
 
 ## Tools used
 - npm only build process
