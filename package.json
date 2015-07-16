@@ -7,6 +7,8 @@
   "devDependencies": {
     "watch": "^0.16.0",
     "parallelshell": "^1.2.0",
+    "http-server": "^0.8.0",
+    "live-reload": "^1.1.0",
     "copyfiles": "^0.2.1",
     "babel": "^5.5.8",
     "node-sass": "^3.2.0",
@@ -23,21 +25,30 @@
     "email": "k.buckstegge@gmail.com"
   },
   "scripts": {
-    "start": "npm run build:watch",
+    "start": "parallelshell 'npm run livereload' 'npm run serve -s'",
+
     "build": "npm run scripts && npm run styles && npm run html",
-    "build:watch": "parallelshell 'npm run styles:watch' 'npm run scripts:watch' 'npm run html:watch'",
+    "watch": "parallelshell 'npm run styles:watch' 'npm run scripts:watch' 'npm run html:watch'",
+
+    "serve": "http-server -p 9090 lib/",
+    "livereload": "live-reload --port 9091 lib/",
+
     "prehtml": "rm -rf lib/*.html",
     "html": "copyfiles -f src/markup/*.html lib",
     "html:watch": "watch 'npm run html' src/markup/",
+
     "scripts": "babel src/scripts --out-dir lib/js/",
     "scripts:watch": "watch 'npm run scripts' src/scripts/",
+
     "styles": "node-sass --source-map lib/css/ -o lib/css/ src/styles/index.scss",
     "styles:watch": "watch 'npm run styles' src/styles/",
     "poststyles": "postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -o lib/css/index.css lib/css/index.css",
+
     "clean": "rm -rf lib/css && rm -rf lib/js && rm -rf dist",
     "prepare": "mkdir -p dist"
   },
   "rememberThis": {
+    "start": "npm run livereload && npm run build:watch",
     "watch": "nodemon -q -w src/ --ext '.' --exec 'npm run build'"
   }
 }
