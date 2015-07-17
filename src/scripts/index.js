@@ -1,3 +1,3 @@
-(() => {
-  console.log('bämsingering');
-}());
+var bam = require('./bam.js');
+
+bam.singer();

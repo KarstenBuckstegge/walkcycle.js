@@ -10,6 +10,8 @@
     "http-server": "^0.8.0",
     "live-reload": "^1.1.0",
     "copyfiles": "^0.2.1",
+    "browserify": "^10.2.6",
+    "babelify": "^6.1.3",
     "babel": "^5.5.8",
     "node-sass": "^3.2.0",
     "postcss-cli": "^1.3.1",
@@ -25,6 +27,7 @@
     "email": "k.buckstegge@gmail.com"
   },
   "scripts": {
+    "prestart": "npm run prepare:dev && npm run build",
     "start": "parallelshell 'npm run livereload' 'npm run serve -s'",
 
     "build": "npm run scripts && npm run styles && npm run html",
@@ -37,7 +40,7 @@
     "html": "copyfiles -f src/markup/*.html lib",
     "html:watch": "watch 'npm run html' src/markup/",
 
-    "scripts": "babel src/scripts --out-dir lib/js/",
+    "scripts": "browserify src/scripts/index.js -t babelify --outfile lib/js/index.js",
     "scripts:watch": "watch 'npm run scripts' src/scripts/",
 
     "styles": "node-sass --source-map lib/css/ -o lib/css/ src/styles/index.scss",
@@ -45,10 +48,12 @@
     "poststyles": "postcss --use autoprefixer --autoprefixer.browsers 'last 2 versions' -o lib/css/index.css lib/css/index.css",
 
     "clean": "rm -rf lib/css && rm -rf lib/js && rm -rf dist",
-    "prepare": "mkdir -p dist"
+    "prepare": "mkdir -p dist",
+    "prepare:dev": "mkdir -p lib/js/ && mkdir -p lib/css/"
   },
   "rememberThis": {
     "start": "npm run livereload && npm run build:watch",
-    "watch": "nodemon -q -w src/ --ext '.' --exec 'npm run build'"
+    "watch": "nodemon -q -w src/ --ext '.' --exec 'npm run build'",
+    "scripts": "babel src/scripts --out-dir lib/js/"
   }
 }
