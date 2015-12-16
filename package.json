@@ -50,10 +50,5 @@
     "clean": "rm -rf lib/css && rm -rf lib/js && rm -rf dist",
     "prepare": "mkdir -p dist",
     "prepare:dev": "mkdir -p lib/js/ && mkdir -p lib/css/"
-  },
-  "rememberThis": {
-    "start": "npm run livereload && npm run build:watch",
-    "watch": "nodemon -q -w src/ --ext '.' --exec 'npm run build'",
-    "scripts": "babel src/scripts --out-dir lib/js/"
   }
 }
